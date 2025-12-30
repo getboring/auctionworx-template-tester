@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getCMSState, CMSState } from '@/lib/store';
-import { getMockEvents, MockEvent, getEventPhaseLabel, getEventTimeLabel } from '@/lib/mock/events';
+import { getMockEvents, MockEvent, getEventTimeLabel } from '@/lib/mock/events';
 import { formatTimeRemaining } from '@/lib/format';
 import Script from 'next/script';
 

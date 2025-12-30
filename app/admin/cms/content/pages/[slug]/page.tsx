@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { getContentPage, saveContentPage, ContentPage } from '@/lib/store';
+import { useParams } from 'next/navigation';
+import { getContentPage, saveContentPage } from '@/lib/store';
 import Link from 'next/link';
 
 export default function EditContentPagePage() {
-  const router = useRouter();
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
 

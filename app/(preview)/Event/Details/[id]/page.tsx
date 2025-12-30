@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getCMSState, CMSState, getSettings } from '@/lib/store';
-import { getMockEventById, MockEvent, getEventPhaseLabel, getEventTimeLabel } from '@/lib/mock/events';
+import { getMockEventById, MockEvent, getEventTimeLabel } from '@/lib/mock/events';
 import { formatPrice, formatTimeRemaining } from '@/lib/format';
 import Script from 'next/script';
 
