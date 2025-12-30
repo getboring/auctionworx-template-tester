@@ -94,7 +94,7 @@ export default function ListingDetailPage() {
                 <li><a href="/">Home</a></li>
                 <li><a href="/Browse">Browse</a></li>
                 <li><a href="/Events">Events</a></li>
-                <span dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
+                <span style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="/Account/LogOn">Sign In</a></li>
@@ -197,7 +197,7 @@ export default function ListingDetailPage() {
                             </div>
                           </div>
 
-                          <div style={{ marginTop: '20px' }}>
+                          <div className="awe-rt-HideOnEnd" style={{ marginTop: '20px' }}>
                             <div className="input-group">
                               <span className="input-group-addon">$</span>
                               <input type="text" className="form-control" placeholder={listing.minimumBid?.toString()} />

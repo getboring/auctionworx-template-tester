@@ -5,7 +5,20 @@
  */
 
 export type ListingType = 'Auction' | 'FixedPrice' | 'Classified';
-export type ListingStatus = 'Preview' | 'Active' | 'Closing' | 'Successful' | 'Unsuccessful' | 'Draft' | 'Pending';
+export type ListingStatus =
+  | 'Preview'
+  | 'Active'
+  | 'Closing'
+  | 'Successful'
+  | 'Unsuccessful'
+  | 'Draft'
+  | 'Pending'
+  | 'Scheduled'
+  | 'Archived'
+  | 'AwaitingPayment'
+  | 'Paused'
+  | 'FailedValidation'
+  | 'Validated';
 
 export interface MockListing {
   id: number;
@@ -217,6 +230,90 @@ export const defaultMockListings: MockListing[] = [
     bidCount: 3,
     reservePrice: 5000,
     reserveMet: false,
+  },
+
+  // Additional statuses for testing
+  {
+    id: 501,
+    title: 'Scheduled - Estate Auction Next Week',
+    listingType: 'Auction',
+    status: 'Scheduled',
+    startTime: daysFromNow(7),
+    endTime: daysFromNow(14),
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '013',
+    description: 'Complete estate auction scheduled for next week.',
+    currentPrice: 0,
+    minimumBid: 1000,
+    bidCount: 0,
+    startingBid: 1000,
+  },
+  {
+    id: 502,
+    title: 'Archived - Old Equipment Lot',
+    listingType: 'Auction',
+    status: 'Archived',
+    endTime: new Date(Date.now() - 30 * 86400000), // Ended 30 days ago
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '014',
+    description: 'Archived auction - no longer available.',
+    currentPrice: 15000,
+    bidCount: 8,
+    reserveMet: true,
+  },
+  {
+    id: 503,
+    title: 'Awaiting Payment - Heavy Machinery',
+    listingType: 'Auction',
+    status: 'AwaitingPayment',
+    endTime: new Date(Date.now() - 3 * 86400000), // Ended 3 days ago
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '015',
+    description: 'Auction ended, awaiting buyer payment.',
+    currentPrice: 45000,
+    bidCount: 15,
+    reserveMet: true,
+  },
+  {
+    id: 504,
+    title: 'Paused - Consignment Items',
+    listingType: 'Auction',
+    status: 'Paused',
+    endTime: daysFromNow(5),
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '016',
+    description: 'Auction temporarily paused by seller.',
+    currentPrice: 3500,
+    minimumBid: 3750,
+    bidCount: 5,
+    startingBid: 2000,
+    reserveMet: true,
+  },
+  {
+    id: 505,
+    title: 'Failed Validation - Incomplete Submission',
+    listingType: 'Auction',
+    status: 'FailedValidation',
+    endTime: daysFromNow(10),
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '017',
+    description: 'Listing failed validation - missing required information.',
+    currentPrice: 0,
+    minimumBid: 500,
+    bidCount: 0,
+    startingBid: 500,
+  },
+  {
+    id: 506,
+    title: 'Validated - Ready to Publish',
+    listingType: 'FixedPrice',
+    status: 'Validated',
+    endTime: daysFromNow(30),
+    imageUrl: '/images/placeholder.jpg',
+    lotNumber: '018',
+    description: 'Listing validated and ready for publishing.',
+    buyNowPrice: 2500,
+    quantity: 3,
   },
 ];
 

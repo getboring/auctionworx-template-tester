@@ -97,7 +97,7 @@ export default function EventDetailPage() {
                 <li><a href="/">Home</a></li>
                 <li><a href="/Browse">Browse</a></li>
                 <li className="active"><a href="/Events">Events</a></li>
-                <span dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
+                <span style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="/Account/LogOn">Sign In</a></li>
@@ -249,7 +249,7 @@ export default function EventDetailPage() {
                         </div>
                         <div style={{ marginTop: '10px' }}>
                           <button className="btn btn-primary btn-sm btn-block PlaceQuickBid">
-                            Quick Bid
+                            Quick Bid <span className="awe-rt-MinimumBid">{formatPrice(listing.minimumBid)}</span>
                           </button>
                         </div>
                       </div>

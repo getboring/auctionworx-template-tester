@@ -74,6 +74,37 @@
       }
     },
 
+    updateMinimumBid: function(listingId, minimumBid) {
+      var container = document.querySelector('[data-listingid="' + listingId + '"]');
+      if (!container) return;
+
+      var minBidEls = container.querySelectorAll('.awe-rt-MinimumBid');
+      var self = this;
+      minBidEls.forEach(function(el) {
+        el.textContent = self.formatCurrency(minimumBid);
+        self.pulse(el);
+      });
+    },
+
+    updateReserveMet: function(listingId, reserveMet) {
+      var container = document.querySelector('[data-listingid="' + listingId + '"]');
+      if (!container) return;
+
+      // Show/hide reserve met indicators
+      container.querySelectorAll('.awe-rt-ShowReserveMet').forEach(function(el) {
+        el.classList.toggle('awe-hidden', !reserveMet);
+      });
+      container.querySelectorAll('.awe-rt-HideReserveMet').forEach(function(el) {
+        el.classList.toggle('awe-hidden', reserveMet);
+      });
+      container.querySelectorAll('.awe-rt-ShowReserveNotMet').forEach(function(el) {
+        el.classList.toggle('awe-hidden', reserveMet);
+      });
+      container.querySelectorAll('.awe-rt-HideReserveNotMet').forEach(function(el) {
+        el.classList.toggle('awe-hidden', !reserveMet);
+      });
+    },
+
     updateBuyNowPrice: function(listingId, price) {
       var container = document.querySelector('[data-listingid="' + listingId + '"]');
       if (!container) return;
@@ -284,13 +315,40 @@
     // Initial Status Display
     // ========================================
     initializeStatusDisplay: function() {
+      var self = this;
+
       // Initialize status display for all listings based on data attributes
       document.querySelectorAll('[data-listingid][data-listingstatus]').forEach(function(container) {
         var status = container.getAttribute('data-listingstatus');
         if (status) {
           var showEl = container.querySelector('.awe-rt-ShowStatus' + status);
           if (showEl) showEl.classList.remove('awe-hidden');
+
+          // Handle ShowOnStart/HideOnStart for active listings
+          if (status === 'Active' || status === 'Closing') {
+            self.handleListingStart(container);
+          }
         }
+      });
+    },
+
+    handleListingStart: function(container) {
+      // Show elements that should appear when listing starts
+      container.querySelectorAll('.awe-rt-ShowOnStart').forEach(function(el) {
+        el.classList.remove('awe-hidden');
+      });
+      container.querySelectorAll('.awe-rt-HideOnStart').forEach(function(el) {
+        el.classList.add('awe-hidden');
+      });
+    },
+
+    handleListingEnd: function(container) {
+      // Show elements that should appear when listing ends
+      container.querySelectorAll('.awe-rt-ShowOnEnd').forEach(function(el) {
+        el.classList.remove('awe-hidden');
+      });
+      container.querySelectorAll('.awe-rt-HideOnEnd').forEach(function(el) {
+        el.classList.add('awe-hidden');
       });
     },
 

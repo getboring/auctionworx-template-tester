@@ -74,7 +74,7 @@ export default function ContentPageRoute() {
                 <li><a href="/">Home</a></li>
                 <li><a href="/Browse">Browse</a></li>
                 <li><a href="/Events">Events</a></li>
-                <span dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
+                <span style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="/Account/LogOn">Sign In</a></li>

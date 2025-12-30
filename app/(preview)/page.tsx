@@ -111,7 +111,7 @@ export default function HomePage() {
                 <li className="active"><a href="/">Home</a></li>
                 <li><a href="/Browse">Browse</a></li>
                 <li><a href="/Events">Events</a></li>
-                <span dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
+                <span style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: cms.subNavigationLinks }} />
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="/Account/LogOn">Sign In</a></li>
@@ -206,7 +206,7 @@ export default function HomePage() {
                         <div style={{ marginTop: '15px', paddingTop: '10px', borderTop: '1px solid #eee' }}>
                           {listing.listingType === 'Auction' && listing.status === 'Active' && (
                             <button className="btn btn-primary btn-sm btn-block PlaceQuickBid">
-                              Quick Bid {formatPrice(listing.minimumBid)}
+                              Quick Bid <span className="awe-rt-MinimumBid">{formatPrice(listing.minimumBid)}</span>
                             </button>
                           )}
                           {listing.listingType === 'FixedPrice' && listing.status === 'Active' && (

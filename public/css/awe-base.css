@@ -266,6 +266,17 @@
   /* Hidden when auction starts/ends */
 }
 
+/* Reserve status display */
+.awe-rt-ShowReserveMet,
+.awe-rt-ShowReserveNotMet {
+  /* Shown based on reserve status */
+}
+
+.awe-rt-HideReserveMet,
+.awe-rt-HideReserveNotMet {
+  /* Hidden based on reserve status */
+}
+
 /* ========================================
    Events Edition Specific
    ======================================== */
@@ -432,14 +443,30 @@
 }
 
 /* ========================================
-   Status Labels (Bootstrap 3 Style)
+   Status Labels (Bootstrap 3 Style Fallbacks)
    ======================================== */
+/* These are included in Bootstrap 3 but added as fallbacks */
+.label-default { background-color: #777; }
+.label-primary { background-color: #337ab7; }
+.label-success { background-color: #5cb85c; }
+.label-info { background-color: #5bc0de; }
+.label-warning { background-color: #f0ad4e; }
+.label-danger { background-color: #d9534f; }
+
+/* Custom AuctionWorx status labels */
 .label-active { background-color: #5cb85c; }
 .label-preview { background-color: #5bc0de; }
 .label-closing { background-color: #f0ad4e; }
 .label-sold { background-color: #5cb85c; }
 .label-ended { background-color: #777; }
 .label-paused { background-color: #f0ad4e; }
+
+/* Text color utilities (Bootstrap 3 fallbacks) */
+.text-danger { color: #d9534f !important; }
+.text-success { color: #5cb85c !important; }
+.text-warning { color: #f0ad4e !important; }
+.text-info { color: #5bc0de !important; }
+.text-muted { color: #777 !important; }
 
 /* ========================================
    Aspect Ratio Helpers
