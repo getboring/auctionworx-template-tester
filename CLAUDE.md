@@ -4,16 +4,35 @@ A development tool for testing AuctionWorx CMS templates without a live installa
 
 ## Important Constraints
 
-### Bootstrap 3 Framework
-The preview pages use **Bootstrap 3** - NOT Bootstrap 4 or 5. This matches the real AuctionWorx platform.
+### Bootstrap 3 Framework (Hard Constraint)
+The preview pages use **Bootstrap 3.4.1** - NOT Bootstrap 4 or 5. This matches the real AuctionWorx platform.
 
-- Use `.col-xs-*`, `.col-sm-*`, `.col-md-*`, `.col-lg-*` grid classes
-- Use `!important` to override Bootstrap styles when needed
-- Bootstrap 3 components: `btn`, `panel`, `well`, `form-group`, `form-control`
-- No flexbox utilities (Bootstrap 3 predates flexbox support)
+| Bootstrap 3 ✓ | Bootstrap 4/5 ✗ | Notes |
+|---------------|-----------------|-------|
+| `col-xs-*`, `col-sm-*`, `col-md-*` | `col-*` (no xs prefix) | Grid system |
+| `panel`, `panel-default` | `card` | Content boxes |
+| `btn-default` | `btn-secondary` | Button styles |
+| `pull-left`, `pull-right` | `float-start`, `float-end` | Floats |
+| `img-responsive` | `img-fluid` | Responsive images |
+| `hidden-xs`, `visible-sm` | `d-none`, `d-sm-block` | Visibility |
+| `text-left`, `text-right` | `text-start`, `text-end` | Alignment |
+| Glyphicons | No default icons | Icons |
+
+Use `!important` to override Bootstrap styles when needed. No flexbox utilities (Bootstrap 3 predates them).
+
+### Protected SignalR Elements
+**NEVER remove, rename, or hide these** - they enable live bid updates:
+
+| Selector | Purpose | If Removed |
+|----------|---------|------------|
+| `.awe-rt-*` (all) | Real-time data binding | Bids won't update live |
+| `.awe-hidden` | SignalR visibility control | UI state breaks |
+| `#SignalRStatus` | Connection indicator | No connection feedback |
+| `#Time` | Server time sync | Auction timing issues |
+
+**Safe:** Colors, fonts, backgrounds, positioning. **Unsafe:** `display:none`, `visibility:hidden`, removing from DOM.
 
 ### AuctionWorx-Specific Rules
-- **Don't remove `.awe-rt-*` classes** - they're used by SignalR for real-time updates
 - Custom page URLs follow pattern: `/Home/Information/PageName`
 - Homepage announcement wrapper: `<div class="hp-announce header-splash">`
 
