@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AuctionWorx Template Tester
 
-## Getting Started
+A development tool for testing AuctionWorx CMS templates without a live installation.
 
-First, run the development server:
+## Live Demo
+
+**Production:** https://auctionworx-template-tester.vercel.app
+
+## Features
+
+- **Preview Pages**: Homepage, Browse, Events, Listing Details, Event Details, Account pages
+- **Admin Panel**: Edit CMS content, manage custom pages, configure settings
+- **Bootstrap 3**: Matches real AuctionWorx platform styling
+- **SignalR Mock**: Simulates real-time bid updates
+- **localStorage**: Persists CMS content between sessions
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Preview site: http://localhost:3000/
+- Admin panel: http://localhost:3000/admin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+├── (preview)/          # Preview pages (Bootstrap 3)
+│   ├── page.tsx        # Homepage
+│   ├── Browse/         # Browse listings
+│   ├── Events/         # Event listings
+│   ├── Listing/Details/[id]/
+│   ├── Event/Details/[id]/
+│   ├── Account/        # LogOn, Register
+│   └── Home/Information/[slug]/  # Custom content pages
+├── admin/              # Admin panel (Tailwind)
+│   ├── cms/content/    # CMS editors
+│   └── settings/       # Mock settings
+components/
+├── admin/              # Admin components
+└── preview/            # Shared preview components
+lib/
+├── store.ts            # localStorage state management
+├── format.ts           # Formatting utilities
+└── mock/               # Mock data (listings, events)
+public/
+├── css/                # Bootstrap 3, base styles
+└── js/                 # jQuery, Bootstrap, SignalR mock
+```
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js 16 (App Router)
+- TypeScript
+- Bootstrap 3.4.1 (preview pages)
+- Tailwind CSS (admin UI)
+- localStorage for persistence
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev    # Start dev server
+npm run build  # Build for production
+npm run lint   # Run ESLint
+```
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deployed automatically to Vercel on push to main.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+vercel --prod  # Manual deploy
+```
+
+## Documentation
+
+See [CLAUDE.md](./CLAUDE.md) for development constraints and guidelines.
