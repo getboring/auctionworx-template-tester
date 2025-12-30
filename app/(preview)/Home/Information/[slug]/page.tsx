@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getCMSState, getContentPage, CMSState, ContentPage } from '@/lib/store';
 import Script from 'next/script';
+import PreviewFooter from '@/components/preview/PreviewFooter';
 
 export default function ContentPageRoute() {
   const params = useParams<{ slug: string }>();
@@ -109,24 +110,7 @@ export default function ContentPageRoute() {
           ) : null}
         </div>
 
-        {/* Footer */}
-        <footer style={{ background: '#222', color: '#999', padding: '40px 0', marginTop: '40px' }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <p>&copy; {new Date().getFullYear()} AuctionWorx Template Preview</p>
-                <p className="small">This is a template testing environment. <a href="/admin" style={{ color: '#5bc0de' }}>Open Admin Panel</a></p>
-              </div>
-              <div className="col-md-6 text-right">
-                <ul className="list-inline">
-                  <li><a href="/Home/Information/Terms" style={{ color: '#999' }}>Terms</a></li>
-                  <li><a href="/Home/Information/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
-                  <li><a href="/Home/Information/Help" style={{ color: '#999' }}>Help</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <PreviewFooter siteFooter={cms.siteFooter} />
 
         <div id="SignalRStatus" className="connected"></div>
         <span id="Time" className="awe-hidden"></span>

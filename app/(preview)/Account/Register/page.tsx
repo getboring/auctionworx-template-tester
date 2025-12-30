@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getCMSState, CMSState } from '@/lib/store';
 import Script from 'next/script';
+import PreviewFooter from '@/components/preview/PreviewFooter';
 
 export default function RegisterPage() {
   const [cms, setCms] = useState<CMSState | null>(null);
@@ -161,28 +162,7 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Footer */}
-        <footer style={{ background: '#222', color: '#999', padding: '40px 0', marginTop: '40px' }}>
-          {cms.siteFooter ? (
-            <div dangerouslySetInnerHTML={{ __html: cms.siteFooter }} />
-          ) : (
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  <p>&copy; {new Date().getFullYear()} AuctionWorx Template Preview</p>
-                  <p className="small"><a href="/admin" style={{ color: '#5bc0de' }}>Open Admin Panel</a></p>
-                </div>
-                <div className="col-md-6 text-right">
-                  <ul className="list-inline">
-                    <li><a href="/Home/Information/Terms" style={{ color: '#999' }}>Terms</a></li>
-                    <li><a href="/Home/Information/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
-                    <li><a href="/Home/Information/Help" style={{ color: '#999' }}>Help</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
-        </footer>
+        <PreviewFooter siteFooter={cms.siteFooter} showDescription={false} />
 
         <div id="SignalRStatus" className="connected"></div>
         <span id="Time" className="awe-hidden"></span>
