@@ -1,0 +1,492 @@
+/**
+ * AuctionWorx Base CSS
+ * Required styles for SignalR real-time updates and core AuctionWorx functionality.
+ * DO NOT remove .awe-* classes - they are critical for SignalR integration.
+ */
+
+/* ========================================
+   CRITICAL - SignalR Hidden Class
+   ======================================== */
+.awe-hidden {
+  display: none !important;
+}
+
+/* ========================================
+   SignalR Connection Status
+   ======================================== */
+#SignalRStatus {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  z-index: 9999;
+  transition: background-color 0.3s ease;
+}
+
+.SignalRStatus-connected #SignalRStatus,
+#SignalRStatus.connected {
+  background-color: #5cb85c;
+}
+
+.SignalRStatus-reconnect #SignalRStatus,
+#SignalRStatus.reconnecting {
+  background-color: #f0ad4e;
+}
+
+.SignalRStatus-stopped #SignalRStatus,
+#SignalRStatus.stopped {
+  background-color: #d9534f;
+}
+
+/* ========================================
+   SignalR Pulse Animation
+   ======================================== */
+.signalr-pulse {
+  animation: signalr-pulse-anim 0.5s ease-in-out;
+}
+
+.signalr-pulse-block {
+  animation: signalr-pulse-block-anim 0.5s ease-in-out;
+}
+
+@keyframes signalr-pulse-anim {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(92, 184, 92, 0.3); }
+  100% { background-color: transparent; }
+}
+
+@keyframes signalr-pulse-block-anim {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* ========================================
+   Homepage / Layout
+   ======================================== */
+.hp-announce {
+  margin-bottom: 20px;
+}
+
+.hp-announce.header-splash {
+  margin-top: -22px;
+  padding: 40px 0;
+}
+
+.header-splash {
+  background-color: #222;
+  color: #fff;
+  padding: 15px 0;
+}
+
+/* ========================================
+   Navigation
+   ======================================== */
+.logo img {
+  max-height: 60px;
+}
+
+.nav-secondary {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+
+.nav-secondary ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-secondary li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.nav-secondary a {
+  color: #555;
+  text-decoration: none;
+}
+
+.nav-secondary a:hover {
+  color: #337ab7;
+}
+
+/* ========================================
+   Gallery / Listing Grid
+   ======================================== */
+.galleryUnit {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.galleryImage {
+  position: relative;
+  overflow: hidden;
+}
+
+.galleryImage img {
+  width: 100%;
+  height: auto;
+}
+
+.galleryTitle {
+  font-weight: 600;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.galleryTitle a {
+  color: #333;
+  text-decoration: none;
+}
+
+.galleryTitle a:hover {
+  color: #337ab7;
+}
+
+.galleryPrice {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #337ab7;
+}
+
+.galleryTime {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.galleryTime--active {
+  color: #d9534f;
+  font-weight: 500;
+}
+
+/* ========================================
+   Listing Badges / Ribbons
+   ======================================== */
+.listing-badge {
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  background: #d9534f;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.listing-badge::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  border-width: 5px 0 0 5px;
+  border-style: solid;
+  border-color: #a94442 transparent transparent transparent;
+}
+
+/* ========================================
+   Detail Page
+   ======================================== */
+.detail__imageContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.detail__imageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+/* Bidding Section */
+.awe-rt-BuyBox {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.Bidding_Local_Price,
+.Bidding_Listing_MinPrice {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #337ab7;
+}
+
+.bid-conf-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Buy It Now Container */
+.awe-rt-BuyItNowContainer {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.awe-rt-MakeOfferContainer {
+  margin-top: 10px;
+}
+
+/* ========================================
+   Status Display Classes
+   ======================================== */
+/* These show/hide based on listing status via SignalR */
+.awe-rt-ShowStatusActive,
+.awe-rt-ShowStatusPreview,
+.awe-rt-ShowStatusScheduled,
+.awe-rt-ShowStatusClosing,
+.awe-rt-ShowStatusArchived,
+.awe-rt-ShowStatusSuccessful,
+.awe-rt-ShowStatusUnsuccessful,
+.awe-rt-ShowStatusDraft,
+.awe-rt-ShowStatusPending,
+.awe-rt-ShowStatusAwaitingPayment,
+.awe-rt-ShowStatusFailedValidation,
+.awe-rt-ShowStatusValidated,
+.awe-rt-ShowStatusPaused {
+  /* Initially hidden, shown by SignalR based on status */
+}
+
+/* Start/End conditional display */
+.awe-rt-ShowOnStart,
+.awe-rt-ShowOnEnd {
+  /* Shown when auction starts/ends */
+}
+
+.awe-rt-HideOnStart,
+.awe-rt-HideOnEnd {
+  /* Hidden when auction starts/ends */
+}
+
+/* ========================================
+   Events Edition Specific
+   ======================================== */
+.awe-rt-eventtimelabel {
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.awe-rt-eventbidstatuslabel {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.awe-rt-eventtimecountdown {
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+/* Event phase indicators */
+.awe-rt-ShowOnBiddingStarted,
+.awe-rt-ShowOnClosingStarted,
+.awe-rt-ShowOnBiddingEnded {
+  /* Shown when event reaches that phase */
+}
+
+.awe-rt-HideOnBiddingStarted,
+.awe-rt-HideOnClosingStarted,
+.awe-rt-HideOnBiddingEnded {
+  /* Hidden when event reaches that phase */
+}
+
+/* Publish/Validation indicators */
+.awe-rt-PublishIndicator,
+.awe-rt-ValidationIndicator {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.awe-rt-PublishCompletedMessage,
+.awe-rt-ValidationCompletedMessage {
+  color: #5cb85c;
+}
+
+/* ========================================
+   Real-time Price/Data Elements
+   ======================================== */
+.awe-rt-CurrentPrice,
+.awe-rt-MinimumBid,
+.awe-rt-BuyNowPrice {
+  font-weight: bold;
+}
+
+.awe-rt-AcceptedListingActionCount {
+  /* Bid count */
+}
+
+.awe-rt-Quantity {
+  /* Available quantity */
+}
+
+.awe-rt-endingDTTM,
+.awe-rt-startingDTTM {
+  /* Countdown timers */
+}
+
+.NumberPart {
+  font-family: inherit;
+}
+
+/* ========================================
+   System Messages
+   ======================================== */
+.awe-rt-SystemMessage {
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  background: #d9edf7;
+  border: 1px solid #bce8f1;
+  color: #31708f;
+}
+
+.awe-rt-ListingActionMessage {
+  padding: 8px 12px;
+  background: #dff0d8;
+  border: 1px solid #d6e9c6;
+  color: #3c763d;
+  border-radius: 4px;
+}
+
+.awe-rt-ListingClosedMessage {
+  padding: 8px 12px;
+  background: #f2dede;
+  border: 1px solid #ebccd1;
+  color: #a94442;
+  border-radius: 4px;
+}
+
+.awe-alert-signalr {
+  padding: 10px;
+  background: #fcf8e3;
+  border: 1px solid #faebcc;
+  color: #8a6d3b;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.awe-refresh-alert,
+.awe-rt-RefreshAlert {
+  padding: 10px;
+  background: #f0ad4e;
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Contextual status */
+.InlineContextualStatus,
+.ContextualStatus {
+  font-style: italic;
+  color: #666;
+}
+
+/* ========================================
+   User Action Links
+   ======================================== */
+.awe-delete-listing-link,
+.awe-end-early-link {
+  color: #d9534f;
+  cursor: pointer;
+}
+
+.awe-delete-listing-link:hover,
+.awe-end-early-link:hover {
+  color: #c9302c;
+  text-decoration: underline;
+}
+
+.awe-category-back-link {
+  color: #337ab7;
+}
+
+/* ========================================
+   Time Display
+   ======================================== */
+#Time {
+  /* Server time display, usually hidden */
+}
+
+.awe-short-date,
+.awe-date-only {
+  /* Date formatting */
+}
+
+/* Extended time (auction extended) */
+.awe-rt-Extended {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+/* ========================================
+   Status Labels (Bootstrap 3 Style)
+   ======================================== */
+.label-active { background-color: #5cb85c; }
+.label-preview { background-color: #5bc0de; }
+.label-closing { background-color: #f0ad4e; }
+.label-sold { background-color: #5cb85c; }
+.label-ended { background-color: #777; }
+.label-paused { background-color: #f0ad4e; }
+
+/* ========================================
+   Aspect Ratio Helpers
+   ======================================== */
+.aspect-4x3 {
+  padding-top: 75%;
+  position: relative;
+}
+
+.aspect-1x1 {
+  padding-top: 100%;
+  position: relative;
+}
+
+.aspect-3x4 {
+  padding-top: 133.33%;
+  position: relative;
+}
+
+.aspect-4x3 > *,
+.aspect-1x1 > *,
+.aspect-3x4 > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========================================
+   Quick Bid Button
+   ======================================== */
+.PlaceQuickBid {
+  /* Quick bid action button */
+}
+
+/* ========================================
+   Responsive Helpers
+   ======================================== */
+@media (max-width: 767px) {
+  .hp-announce.header-splash {
+    margin-top: 0;
+    padding: 20px 0;
+  }
+
+  .galleryPrice {
+    font-size: 1.1em;
+  }
+}
