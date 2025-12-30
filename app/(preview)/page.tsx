@@ -221,9 +221,9 @@ export default function HomePage() {
                 </div>
                 <div className="col-md-6 text-right">
                   <ul className="list-inline">
-                    <li><a href="/Home/Terms" style={{ color: '#999' }}>Terms</a></li>
-                    <li><a href="/Home/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
-                    <li><a href="/Home/Help" style={{ color: '#999' }}>Help</a></li>
+                    <li><a href="/Home/Information/Terms" style={{ color: '#999' }}>Terms</a></li>
+                    <li><a href="/Home/Information/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
+                    <li><a href="/Home/Information/Help" style={{ color: '#999' }}>Help</a></li>
                   </ul>
                 </div>
               </div>
