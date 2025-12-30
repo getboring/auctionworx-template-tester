@@ -31,6 +31,11 @@ export default function HomepageAnnouncementPage() {
           description="HTML content for the homepage hero area. Use Bootstrap 3 grid classes."
           value={value}
           onChange={handleSave}
+          historyEntry={{
+            area: 'homepage-announcement',
+            label: 'Homepage Announcement',
+            href: '/admin/cms/content/homepage-announcement'
+          }}
           placeholder={`<div class="container">
   <div class="row">
     <div class="col-xs-12 text-center">

@@ -11,6 +11,8 @@ export interface CMSState {
   footerScripts: string;
   homepageAnnouncement: string;
   subNavigationLinks: string; // Expected format: <li><a href="/Home/Information/PageName">Link Text</a></li>
+  siteHeader: string; // Custom HTML for site header area
+  siteFooter: string; // Custom HTML for site footer area
   contentPages: Record<string, ContentPage>;
 }
 
@@ -34,9 +36,18 @@ export interface AppState {
   settings: MockSettings;
 }
 
+// Edit history for "Recently Edited" feature
+export interface EditHistoryEntry {
+  area: string;
+  label: string;
+  href: string;
+  timestamp: string;
+}
+
 // Storage keys
 const CMS_STORAGE_KEY = 'auctionworx-template-cms';
 const SETTINGS_STORAGE_KEY = 'auctionworx-template-settings';
+const EDIT_HISTORY_KEY = 'auctionworx-template-edit-history';
 
 // Default CMS state
 const defaultCMSState: CMSState = {
@@ -67,6 +78,30 @@ $(document).ready(function() {
 </div>`,
   subNavigationLinks: `<li><a href="/Home/Information/About">About Us</a></li>
 <li><a href="/Home/Information/Contact">Contact</a></li>`,
+  siteHeader: `<!-- Site Header Content -->
+<div class="site-header-content">
+  <!-- Add custom header content here -->
+</div>`,
+  siteFooter: `<!-- Site Footer Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h4>About Us</h4>
+      <p>Your trusted auction platform.</p>
+    </div>
+    <div class="col-md-4">
+      <h4>Quick Links</h4>
+      <ul class="list-unstyled">
+        <li><a href="/Home/Information/Terms">Terms of Service</a></li>
+        <li><a href="/Home/Information/Privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h4>Contact</h4>
+      <p>Email: contact@example.com</p>
+    </div>
+  </div>
+</div>`,
   contentPages: {
     'About': {
       title: 'About Us',
@@ -222,6 +257,40 @@ export function resetSettings(): MockSettings {
 export function resetAll(): void {
   resetCMSState();
   resetSettings();
+}
+
+// Edit history functions
+export function getEditHistory(): EditHistoryEntry[] {
+  if (!isBrowser) return [];
+  try {
+    const stored = localStorage.getItem(EDIT_HISTORY_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading edit history:', e);
+  }
+  return [];
+}
+
+export function addEditHistory(entry: Omit<EditHistoryEntry, 'timestamp'>): void {
+  if (!isBrowser) return;
+  try {
+    const history = getEditHistory();
+    // Remove existing entry for same area if exists
+    const filtered = history.filter(h => h.area !== entry.area);
+    // Add new entry at the beginning
+    const newEntry: EditHistoryEntry = {
+      ...entry,
+      timestamp: new Date().toISOString(),
+    };
+    filtered.unshift(newEntry);
+    // Keep only last 10 entries
+    const trimmed = filtered.slice(0, 10);
+    localStorage.setItem(EDIT_HISTORY_KEY, JSON.stringify(trimmed));
+  } catch (e) {
+    console.error('Error saving edit history:', e);
+  }
 }
 
 // Export defaults for reference

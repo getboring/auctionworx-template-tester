@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getCMSState, CMSState, getSettings } from '@/lib/store';
 import { getMockEventById, MockEvent, getEventPhaseLabel, getEventTimeLabel } from '@/lib/mock/events';
+import { formatPrice, formatTimeRemaining } from '@/lib/format';
 import Script from 'next/script';
 
 export default function EventDetailPage() {
-  const params = useParams();
-  const id = parseInt(params.id as string);
+  const params = useParams<{ id: string }>();
+  const id = parseInt(params.id);
 
   const [cms, setCms] = useState<CMSState | null>(null);
   const [event, setEvent] = useState<MockEvent | null>(null);
@@ -25,27 +26,6 @@ export default function EventDetailPage() {
     }
     setMounted(true);
   }, [id]);
-
-  const formatPrice = (price?: number) => {
-    if (!price) return '$0';
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
-  const formatTimeRemaining = (endTime: Date) => {
-    const ms = endTime.getTime() - Date.now();
-    if (ms <= 0) return 'Ended';
-    const d = Math.floor(ms / 86400000);
-    const h = Math.floor((ms % 86400000) / 3600000);
-    const m = Math.floor((ms % 3600000) / 60000);
-    const s = Math.floor((ms % 60000) / 1000);
-    if (d > 0) return `${d}d ${h}h ${m}m`;
-    if (h > 0) return `${h}h ${m}m ${s}s`;
-    return `${m}m ${s}s`;
-  };
 
   const settings = getSettings();
   const aspectClass = `aspect-${settings.galleryAspectRatio}`;
@@ -78,6 +58,11 @@ export default function EventDetailPage() {
         <div dangerouslySetInnerHTML={{ __html: cms.headerScripts }} />
       </head>
       <body className="SignalRStatus-connected">
+        {/* Site Header */}
+        {cms.siteHeader && (
+          <div className="site-header" dangerouslySetInnerHTML={{ __html: cms.siteHeader }} />
+        )}
+
         {/* Navigation */}
         <nav className="navbar navbar-default navbar-static-top">
           <div className="container">
@@ -263,20 +248,24 @@ export default function EventDetailPage() {
 
         {/* Footer */}
         <footer style={{ background: '#222', color: '#999', padding: '40px 0', marginTop: '40px' }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <p>&copy; {new Date().getFullYear()} AuctionWorx Template Preview</p>
-                <p className="small"><a href="/admin" style={{ color: '#5bc0de' }}>Open Admin Panel</a></p>
-              </div>
-              <div className="col-md-6 text-right">
-                <ul className="list-inline">
-                  <li><a href="/Home/Terms" style={{ color: '#999' }}>Terms</a></li>
-                  <li><a href="/Home/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
-                </ul>
+          {cms.siteFooter ? (
+            <div dangerouslySetInnerHTML={{ __html: cms.siteFooter }} />
+          ) : (
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <p>&copy; {new Date().getFullYear()} AuctionWorx Template Preview</p>
+                  <p className="small"><a href="/admin" style={{ color: '#5bc0de' }}>Open Admin Panel</a></p>
+                </div>
+                <div className="col-md-6 text-right">
+                  <ul className="list-inline">
+                    <li><a href="/Home/Terms" style={{ color: '#999' }}>Terms</a></li>
+                    <li><a href="/Home/PrivacyPolicy" style={{ color: '#999' }}>Privacy</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </footer>
 
         <div id="SignalRStatus" className="connected"></div>

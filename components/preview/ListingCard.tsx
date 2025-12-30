@@ -2,6 +2,7 @@
 
 import { MockListing } from '@/lib/mock/listings';
 import { getSettings } from '@/lib/store';
+import { formatPrice, formatTimeRemaining, getStatusClass } from '@/lib/format';
 
 interface ListingCardProps {
   listing: MockListing;
@@ -10,43 +11,6 @@ interface ListingCardProps {
 export default function ListingCard({ listing }: ListingCardProps) {
   const settings = getSettings();
   const aspectClass = `aspect-${settings.galleryAspectRatio}`;
-
-  // Format currency
-  const formatPrice = (price?: number) => {
-    if (!price) return '$0';
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
-  // Format time remaining
-  const formatTimeRemaining = (endTime: Date) => {
-    const ms = endTime.getTime() - Date.now();
-    if (ms <= 0) return 'Ended';
-
-    const d = Math.floor(ms / 86400000);
-    const h = Math.floor((ms % 86400000) / 3600000);
-    const m = Math.floor((ms % 3600000) / 60000);
-
-    if (d > 0) return `${d}d ${h}h ${m}m`;
-    if (h > 0) return `${h}h ${m}m`;
-    return `${m}m`;
-  };
-
-  // Get status label class
-  const getStatusClass = (status: string) => {
-    const map: Record<string, string> = {
-      'Active': 'label-success',
-      'Preview': 'label-info',
-      'Closing': 'label-warning',
-      'Successful': 'label-success',
-      'Unsuccessful': 'label-default',
-    };
-    return map[status] || 'label-default';
-  };
 
   // Render based on listing type
   const renderAuctionContent = () => (

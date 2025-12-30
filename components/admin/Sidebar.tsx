@@ -26,6 +26,8 @@ const contentItems: NavItem[] = [
   { label: 'Footer Scripts', href: '/admin/cms/content/footer-scripts' },
   { label: 'Homepage Announcement', href: '/admin/cms/content/homepage-announcement' },
   { label: 'Sub-Navigation Links', href: '/admin/cms/content/sub-navigation' },
+  { label: 'Site Header', href: '/admin/cms/content/site-header' },
+  { label: 'Site Footer', href: '/admin/cms/content/site-footer' },
   { label: 'Content Pages', href: '/admin/cms/content/pages' },
 ];
 

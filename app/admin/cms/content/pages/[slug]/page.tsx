@@ -7,8 +7,8 @@ import Link from 'next/link';
 
 export default function EditContentPagePage() {
   const router = useRouter();
-  const params = useParams();
-  const slug = params.slug as string;
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
