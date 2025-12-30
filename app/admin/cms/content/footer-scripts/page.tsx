@@ -30,6 +30,11 @@ export default function FooterScriptsPage() {
           description="Include <script> tags. jQuery is available globally."
           value={value}
           onChange={handleSave}
+          historyEntry={{
+            area: 'footer-scripts',
+            label: 'Footer Scripts',
+            href: '/admin/cms/content/footer-scripts'
+          }}
           placeholder={`<script>
 $(document).ready(function() {
   // Your custom JavaScript here

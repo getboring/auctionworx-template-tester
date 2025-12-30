@@ -1,8 +1,30 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getEditHistory, EditHistoryEntry } from '@/lib/store';
 
 export default function AdminDashboard() {
+  const [recentEdits, setRecentEdits] = useState<EditHistoryEntry[]>([]);
+
+  useEffect(() => {
+    setRecentEdits(getEditHistory());
+  }, []);
+
+  const formatTimeAgo = (timestamp: string) => {
+    const now = new Date();
+    const then = new Date(timestamp);
+    const diffMs = now.getTime() - then.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
@@ -22,6 +44,25 @@ export default function AdminDashboard() {
           </ol>
         </div>
       </div>
+
+      {/* Recently Edited Section */}
+      {recentEdits.length > 0 && (
+        <div className="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">Recently Edited</h2>
+          <div className="space-y-3">
+            {recentEdits.slice(0, 5).map((edit, index) => (
+              <Link
+                key={`${edit.area}-${index}`}
+                href={edit.href}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors"
+              >
+                <span className="font-medium text-gray-900">{edit.label}</span>
+                <span className="text-sm text-gray-500">{formatTimeAgo(edit.timestamp)}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Quick Links */}

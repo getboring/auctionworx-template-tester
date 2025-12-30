@@ -30,6 +30,11 @@ export default function HeaderScriptsPage() {
           description="Include <style> tags for CSS and <link> tags for external resources."
           value={value}
           onChange={handleSave}
+          historyEntry={{
+            area: 'header-scripts',
+            label: 'Header Scripts',
+            href: '/admin/cms/content/header-scripts'
+          }}
           placeholder={`<style>
 /* Custom CSS */
 .btn-primary {

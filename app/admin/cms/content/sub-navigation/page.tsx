@@ -30,6 +30,11 @@ export default function SubNavigationPage() {
           description="Expected format: <li><a href='/Home/Information/PageName'>Link Text</a></li>"
           value={value}
           onChange={handleSave}
+          historyEntry={{
+            area: 'sub-navigation',
+            label: 'Sub-Navigation Links',
+            href: '/admin/cms/content/sub-navigation'
+          }}
           rows={10}
           placeholder={`<li><a href="/Home/Information/About">About Us</a></li>
 <li><a href="/Home/Information/Contact">Contact</a></li>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { addEditHistory } from '@/lib/store';
 
 interface ContentTextareaProps {
   label: string;
@@ -9,6 +10,11 @@ interface ContentTextareaProps {
   onChange: (value: string) => void;
   placeholder?: string;
   rows?: number;
+  historyEntry?: {
+    area: string;
+    label: string;
+    href: string;
+  };
 }
 
 export default function ContentTextarea({
@@ -18,9 +24,11 @@ export default function ContentTextarea({
   onChange,
   placeholder,
   rows = 20,
+  historyEntry,
 }: ContentTextareaProps) {
   const [localValue, setLocalValue] = useState(value);
   const [isSaved, setIsSaved] = useState(true);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     setLocalValue(value);
@@ -34,7 +42,13 @@ export default function ContentTextarea({
   const handleSave = useCallback(() => {
     onChange(localValue);
     setIsSaved(true);
-  }, [localValue, onChange]);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+    // Record edit history
+    if (historyEntry) {
+      addEditHistory(historyEntry);
+    }
+  }, [localValue, onChange, historyEntry]);
 
   // Keyboard shortcut: Cmd/Ctrl + S to save
   useEffect(() => {
@@ -48,6 +62,19 @@ export default function ContentTextarea({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleSave]);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isSaved) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isSaved]);
 
   return (
     <div>
@@ -101,6 +128,16 @@ export default function ContentTextarea({
           </svg>
         </a>
       </div>
+
+      {/* Success Toast */}
+      {showToast && (
+        <div className="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in z-50">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          Changes saved successfully
+        </div>
+      )}
     </div>
   );
 }
